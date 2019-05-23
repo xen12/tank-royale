@@ -15,11 +15,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- *
- * @author Bernardo
+ * @author Gustavo
  */
+
 public class BalaView extends JLabel {
-    private static final String NOMBRE_IMAGEN = "Resources/Imagenes/bala.png";
+    private static final String NOMBRE_IMAGEN = "img/bala.png";
     private static final int ANCHO = 20;
     private static final int ALTO = 20;
     private static final int VELOCIDAD = 5;

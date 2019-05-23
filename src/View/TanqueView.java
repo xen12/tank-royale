@@ -20,14 +20,15 @@ import javax.swing.JLabel;
  */
 public class TanqueView extends JLabel {
     
-    private static final String NOMBRE_IMAGEN = "Resources/Imagenes/tank.png";
+    private static String NOMBRE_IMAGEN; 
     private static final int ANCHO = 50;
     private static final int ALTO = 50;
     private static final int VELOCIDAD = 5;
     
     private Image imagen;
     
-    public TanqueView(int x, int y){
+    public TanqueView(int x, int y, int img){
+        NOMBRE_IMAGEN = "img/tank"+ img + ".png";
         init(x, y);
     }
     
