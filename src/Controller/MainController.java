@@ -31,7 +31,7 @@ public class MainController {
     private Tanque[] tanques;
     private TanqueView[] tanquesVisual;
     //private BalaView[] balas;
-    int num = 50;
+    int num = 100;
     
     public void inicializar() throws ClassNotFoundException, IOException{
         frame = new FramePrincipal();
