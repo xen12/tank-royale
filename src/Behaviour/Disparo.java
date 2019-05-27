@@ -18,13 +18,14 @@ public class Disparo extends CyclicBehaviour{
     private int dirX;
     private int dirY;
     private long contadorTiempo;
-    private Tanque agente;
+    private Tanque tanque;
+    public int VELOCIDAD = 4;
     
-    public Disparo(Tanque agente){
+    public Disparo(Tanque tanque){
         super();
-        this.agente = agente;
-        x = agente.getX();
-        y = agente.getY();
+        this.tanque = tanque;
+        x = tanque.getX();
+        y = tanque.getY();
         contadorTiempo = System.currentTimeMillis();
     }
     
@@ -33,26 +34,33 @@ public class Disparo extends CyclicBehaviour{
         
         //System.out.println("Disparo de: " + myAgent.getLocalName());
         
-        if(!agente.disparar){
-            x = agente.getX();
-            y = agente.getY();
-            dirX = agente.movimiento.dirX;
-            dirY = agente.movimiento.dirY;
+        if(!tanque.disparar){
+            x = tanque.getX();
+            y = tanque.getY();
+            dirX = tanque.movimiento.dirX;
+            dirY = tanque.movimiento.dirY;
             contadorTiempo = System.currentTimeMillis();
         }
         else{
-            if(System.currentTimeMillis() - contadorTiempo >= 10){
+            if(System.currentTimeMillis() - contadorTiempo >= VELOCIDAD){
                 contadorTiempo = System.currentTimeMillis();
                 x += dirX;
                 y += dirY;
                 if(dirX == 0 && dirY == 0)
-                    agente.disparar = false;
+                    tanque.disparar = false;
                 if(x < 0 || x > 1150 || y < 0 || y > 550)
-                    agente.disparar = false;
+                    tanque.disparar = false;
             }
         }
         
         
     }
     
+    public int getX(){
+        return x;
+    }
+    
+    public int getY(){
+        return y;
+    }
 }

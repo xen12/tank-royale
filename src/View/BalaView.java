@@ -47,8 +47,8 @@ public class BalaView extends JLabel {
     public void mover(int xPos, int yPos){
         RotatedIcon img = null;
         
-        int x = xPos == getX()?0:xPos>getX()?1:-1;
-        int y = yPos == getY()?0:yPos>getY()?1:-1;
+        int x = xPos == getX() ? 0 : xPos > getX() ? 1 : -1;
+        int y = yPos == getY() ? 0 : yPos > getY() ? 1 : -1;
         
         if(x < 0)
             img = new RotatedIcon(new ImageIcon(imagen), RotatedIcon.Rotate.DOWN);
@@ -61,6 +61,6 @@ public class BalaView extends JLabel {
         if(img != null)
             setIcon(img);
         
-        setBounds((xPos*VELOCIDAD), (yPos*VELOCIDAD), ANCHO, ALTO);
+        setBounds((xPos), (yPos), ANCHO, ALTO);
     }
 }

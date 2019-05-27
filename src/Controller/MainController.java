@@ -16,6 +16,7 @@ import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -28,16 +29,16 @@ import java.util.logging.Logger;
 public class MainController {
     
     private FramePrincipal frame;
-    private Tanque[] tanques;
-    private TanqueView[] tanquesVisual;
-    private BalaView[] balas;
-    int num = 10;
+    private ArrayList<Tanque> tanques;
+    private ArrayList<TanqueView> tanquesVisual;
+    private ArrayList<BalaView> balas;
+    int num = 3;
     
     public void inicializar() throws ClassNotFoundException, IOException{
         frame = new FramePrincipal();
-        tanques = new Tanque[num];
-        tanquesVisual = new TanqueView[num];
-        balas = new BalaView[num];
+        tanques = new ArrayList<Tanque>();
+        tanquesVisual = new ArrayList<TanqueView>();
+        balas = new ArrayList<BalaView>();
         inicializarTanques();
         
         frame.setVisible(true);
@@ -46,22 +47,55 @@ public class MainController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                int objetivoX;
+                int objetivoY;
                 
                 for(int i=0 ; i<num ; i++){
-                    tanquesVisual[i].mover(tanques[i].getX(), tanques[i].getY());
-                    balas[i].mover(tanques[i].disparo.x, tanques[i].disparo.y);
+                    tanquesVisual.get(i).mover(tanques.get(i).getX(), tanques.get(i).getY());
+                    balas.get(i).mover(tanques.get(i).disparo.x, tanques.get(i).disparo.y);
+                    
+                    //System.out.println("Salud de " + tanques.get(i).getLocalName() + ": " + tanques.get(i).hp);
                     
                     for(int j=0 ; j<num ; j++){
                         if(i!=j){
-                            double dif = Math.min(Math.abs(tanques[i].getX() - tanques[j].getX()) 
-                                    , Math.abs(tanques[i].getY() - tanques[j].getY()));
+                            
+                            //if(tanques.get(j).disparo.x > tanques.get(i).getX() && tanques.get(j).disparo.x < tanques.get(i).getX() + 50
+                                // && tanques.get(j).disparo.y > tanques.get(i).getY() && tanques.get(j).disparo.y < tanques.get(i).getY() + 50){
+                                
+                                // Sensor en eje X
+                                if( tanquesVisual.get(i).getY() > tanquesVisual.get(j).getY()-25 && tanquesVisual.get(i).getY() < tanquesVisual.get(j).getY()+25 ){
+                                    if(tanquesVisual.get(i).orientacion == "izquierda" && tanquesVisual.get(j).getX() < tanquesVisual.get(i).getX()){
+                                        tanques.get(i).disparar = true;
+                                    }
+                                    else if (tanquesVisual.get(i).orientacion == "derecha" && tanquesVisual.get(j).getX() > tanquesVisual.get(i).getX()){
+                                        tanques.get(i).disparar = true;
+                                    }
+                                }
+                                //Sensor en eje Y
+                                else if ( tanquesVisual.get(i).getX() > tanquesVisual.get(j).getX()-25 && tanquesVisual.get(i).getX() < tanquesVisual.get(j).getX()+25 ){
+                                    if(tanquesVisual.get(i).orientacion == "arriba" && tanquesVisual.get(j).getY() < tanquesVisual.get(i).getY()){
+                                        tanques.get(i).disparar = true;
+                                    }
+                                    else if (tanquesVisual.get(i).orientacion == "abajo" && tanquesVisual.get(j).getY() > tanquesVisual.get(i).getY()){
+                                        tanques.get(i).disparar = true;
+                                    }
+                                }
+                                /*
+                                if(tanques.get(j).disparo.x == tanques.get(i).getX() && tanques.get(j).disparo.y == tanques.get(i).getY()){
+                                tanques.get(i).recibirDaño();
+                                tanques.get(i).disparar = false;
+                            }*/
+                            
+                            
+                            //double dif = Math.min(Math.abs(tanques[i].getX() - tanques[j].getX()), Math.abs(tanques[i].getY() - tanques[j].getY()));
+                            /*
                             double val = Math.random();
-                            if(tanques[i].getX() ==  tanques[j].getX() || tanques[i].getY() ==  tanques[j].getY()){
-                                tanques[i].disparar = true;
-                                //tanques[i].detener();
-                                //tanques[j].detener();
-                                //System.out.println("Disparo de " + tanques[i].getLocalName());
+                            if(tanques.get(i).getX() ==  tanques.get(j).getX() || tanques.get(i).getY() ==  tanques.get(j).getY()){
+                                tanques.get(i).disparar = true;
+                                //tanques.get(i).detener();
+                                //tanques.get(j).detener();
                             }
+                            */
                         }
                     }
                     
@@ -69,7 +103,7 @@ public class MainController {
                 }
                 
             }
-        }, 5, 5);
+        }, 3, 3);
     }
     
     public void inicializarTanques() {
@@ -90,12 +124,12 @@ public class MainController {
                 int img = ((int)Math.floor(Math.random() * (4 - 1 +1) + 1));
                 //balas[i] = frame.agregarNuevaBala(i * 200, i * 200);
                 Tanque tanque = new Tanque(posX, posY);
-                tanquesVisual[i] = frame.agregarNuevoTanque(posX, posY, img);
-                balas[i] = frame.agregarNuevaBala(posX, posY);
+                tanquesVisual.add(frame.agregarNuevoTanque(posX, posY, img));
+                balas.add(frame.agregarNuevaBala(posX, posY));
                 
                 ac = container.acceptNewAgent(nombres[i], tanque);
                 ac.start();
-                tanques[i] = tanque;
+                tanques.add(tanque);
             }
         } catch (StaleProxyException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);

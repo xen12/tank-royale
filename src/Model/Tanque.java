@@ -13,13 +13,14 @@ public class Tanque extends Agent {
     public Disparo disparo;
     public boolean disparar;
     public int hp;
+    public String orientación;
     
     public Tanque(int x, int y){
         super();
         movimiento = new Movimiento(x, y);
         disparo = new Disparo(this);
-        hp = 100;
         disparar = false;
+        hp = 100;
     }
     
     @Override
@@ -38,5 +39,9 @@ public class Tanque extends Agent {
     
     public int getY(){
         return movimiento.getY();
+    }
+    
+    public void recibirDaño(){
+        hp = hp -10;
     }
 }
