@@ -5,21 +5,34 @@
  */
 package View;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
  *
  * @author Bernardo
  */
-public class PanelView extends JPanel implements KeyListener{
+public class PanelView extends JPanel implements KeyListener{   
     
     //TanqueView tanque;
+    
+    URL url = getClass().getClassLoader().getResource("img/bg.jpg");
+    Image image = new ImageIcon(url).getImage();
     
     public PanelView(){
         inicializar();
     }
+    
+    public void paint(Graphics g){
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        setOpaque(false);
+        super.paint(g);
+    } 
     
     private void inicializar(){
         //tanque = new TanqueView(50, 50);

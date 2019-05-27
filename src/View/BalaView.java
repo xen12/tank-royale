@@ -20,9 +20,9 @@ import javax.swing.JLabel;
 
 public class BalaView extends JLabel {
     private static final String NOMBRE_IMAGEN = "img/bala.png";
-    private static final int ANCHO = 20;
-    private static final int ALTO = 20;
-    private static final int VELOCIDAD = 5;
+    private static final int ANCHO = 50;
+    private static final int ALTO = 50;
+    private static final int VELOCIDAD =1;
     
     private Image imagen;
     
@@ -61,6 +61,6 @@ public class BalaView extends JLabel {
         if(img != null)
             setIcon(img);
         
-        setBounds(xPos, yPos, ANCHO, ALTO);
+        setBounds((xPos*VELOCIDAD), (yPos*VELOCIDAD), ANCHO, ALTO);
     }
 }

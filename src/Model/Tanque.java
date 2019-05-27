@@ -12,12 +12,13 @@ public class Tanque extends Agent {
     public Movimiento movimiento;
     public Disparo disparo;
     public boolean disparar;
+    public int hp;
     
     public Tanque(int x, int y){
         super();
-        disparo = new Disparo(this);
         movimiento = new Movimiento(x, y);
-        
+        disparo = new Disparo(this);
+        hp = 100;
         disparar = false;
     }
     

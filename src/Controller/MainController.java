@@ -30,13 +30,14 @@ public class MainController {
     private FramePrincipal frame;
     private Tanque[] tanques;
     private TanqueView[] tanquesVisual;
-    //private BalaView[] balas;
-    int num = 100;
+    private BalaView[] balas;
+    int num = 10;
     
     public void inicializar() throws ClassNotFoundException, IOException{
         frame = new FramePrincipal();
         tanques = new Tanque[num];
         tanquesVisual = new TanqueView[num];
+        balas = new BalaView[num];
         inicializarTanques();
         
         frame.setVisible(true);
@@ -48,6 +49,23 @@ public class MainController {
                 
                 for(int i=0 ; i<num ; i++){
                     tanquesVisual[i].mover(tanques[i].getX(), tanques[i].getY());
+                    balas[i].mover(tanques[i].disparo.x, tanques[i].disparo.y);
+                    
+                    for(int j=0 ; j<num ; j++){
+                        if(i!=j){
+                            double dif = Math.min(Math.abs(tanques[i].getX() - tanques[j].getX()) 
+                                    , Math.abs(tanques[i].getY() - tanques[j].getY()));
+                            double val = Math.random();
+                            if(tanques[i].getX() ==  tanques[j].getX() || tanques[i].getY() ==  tanques[j].getY()){
+                                tanques[i].disparar = true;
+                                //tanques[i].detener();
+                                //tanques[j].detener();
+                                //System.out.println("Disparo de " + tanques[i].getLocalName());
+                            }
+                        }
+                    }
+                    
+                    
                 }
                 
             }
@@ -67,12 +85,13 @@ public class MainController {
         
         try {
             for(int i=0;i<num;i++){
-                int altura = (int)Math.floor(Math.random() * (480 - 1 +1) + 0);
-                int ancho = (int)Math.floor(Math.random() * (1080 - 1 +1) + 0);
+                int posY = (int)Math.floor(Math.random() * (480 - 1 +1) + 0);
+                int posX = (int)Math.floor(Math.random() * (1080 - 1 +1) + 0);
                 int img = ((int)Math.floor(Math.random() * (4 - 1 +1) + 1));
                 //balas[i] = frame.agregarNuevaBala(i * 200, i * 200);
-                Tanque tanque = new Tanque(ancho, altura);
-                tanquesVisual[i] = frame.agregarNuevoTanque(ancho, altura, img);
+                Tanque tanque = new Tanque(posX, posY);
+                tanquesVisual[i] = frame.agregarNuevoTanque(posX, posY, img);
+                balas[i] = frame.agregarNuevaBala(posX, posY);
                 
                 ac = container.acceptNewAgent(nombres[i], tanque);
                 ac.start();

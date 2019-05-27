@@ -23,8 +23,8 @@ public class Disparo extends CyclicBehaviour{
     public Disparo(Tanque agente){
         super();
         this.agente = agente;
-        //x = agente.getX();
-        //y = agente.getY();
+        x = agente.getX();
+        y = agente.getY();
         contadorTiempo = System.currentTimeMillis();
     }
     
@@ -33,7 +33,6 @@ public class Disparo extends CyclicBehaviour{
         
         //System.out.println("Disparo de: " + myAgent.getLocalName());
         
-        /*
         if(!agente.disparar){
             x = agente.getX();
             y = agente.getY();
@@ -52,7 +51,7 @@ public class Disparo extends CyclicBehaviour{
                     agente.disparar = false;
             }
         }
-        */
+        
         
     }
     

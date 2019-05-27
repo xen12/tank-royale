@@ -6,7 +6,11 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
@@ -19,15 +23,18 @@ public class FramePrincipal extends JFrame{
     private PanelView panel;
     private static final int ANCHO = 1150;
     private static final int ALTO =  550;
+    //private URL url = getClass().getResource("/img/bg.jpg");
+    //Image image = new ImageIcon(url).getImage();
     
     public FramePrincipal(){
         init();
     }
     
     private void init(){
+        
         panel = new PanelView();
         panel.setLayout(null);
-        panel.setBackground(new Color(50,220,170));
+        //panel.setBackground(new Color(50,220,170));
         panel.setBounds(0, 0, ANCHO, ALTO);
         panel.addKeyListener(panel);
         panel.setFocusable(true);

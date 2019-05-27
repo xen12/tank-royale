@@ -34,7 +34,7 @@ public class Movimiento extends Behaviour{
     
     @Override
     public void action() {
-        System.out.println(myAgent.getLocalName() + " moviéndose");
+        //System.out.println(myAgent.getLocalName() + " moviéndose");
         if(System.currentTimeMillis() - contadorTiempo >= 50){
             if(keep <= 0){
                 Random r = new Random(System.currentTimeMillis() / (x * y + 1));
