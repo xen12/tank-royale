@@ -6,6 +6,8 @@
 package View;
 
 import Extra.RotatedIcon;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +29,17 @@ public class TanqueView extends JLabel {
     public String orientacion;
     
     private Image imagen;
+    private String name;
+    private FramePrincipal frame;
+    public JLabel label;
     
-    public TanqueView(int x, int y, int img){
+    public TanqueView(int x, int y, int img, FramePrincipal frame, String name){
         NOMBRE_IMAGEN = "img/tank"+ img + ".png";
+        this.frame = frame;
+        this.name = name;
+        label = new JLabel("<html>" + name + "<br>" + " 100/100" + "<html>", JLabel.CENTER );
+        label.setFont(new Font("Serif", Font.BOLD, 13));
+        label.setForeground(Color.black);
         init(x, y);
     }
     
@@ -45,9 +55,12 @@ public class TanqueView extends JLabel {
         }
         setBounds(posX, posY, ANCHO, ALTO);
         setIcon(new ImageIcon(imagen));
+        
+        label.setBounds(posX-14,posY+6,80,120);
+        frame.agregarLabel(label);
     }
     
-    public void mover(int xPos, int yPos){
+    public void mover(int xPos, int yPos, FramePrincipal frame){
         RotatedIcon img = null;
         
         int x = xPos == getX() ? 0 : xPos>getX() ? 1 : -1;
@@ -65,9 +78,11 @@ public class TanqueView extends JLabel {
             setIcon(img);
         
         setBounds(xPos, yPos, ANCHO, ALTO);
+        label.setBounds(xPos-14, yPos+6, 80, 120);
     }
     
     public void retirar(int xPos, int yPos){
         setBounds(xPos, yPos, ANCHO, ALTO);
+        label.setBounds(xPos, yPos, ANCHO, ALTO);
     }
 }

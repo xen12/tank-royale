@@ -46,8 +46,8 @@ public class FramePrincipal extends JFrame{
         setBounds(100, 100, ANCHO, ALTO);
     }
     
-    public TanqueView agregarNuevoTanque(int x, int y, int img){
-        TanqueView tanque = new TanqueView(x, y, img);
+    public TanqueView agregarNuevoTanque(int x, int y, int img, FramePrincipal frame, String name){
+        TanqueView tanque = new TanqueView(x, y, img, frame, name);
         panel.add(tanque);
         return tanque;
     }
@@ -64,5 +64,9 @@ public class FramePrincipal extends JFrame{
     
     public void eliminarBala(BalaView bala){
         panel.remove(bala);
+    }
+    
+    public void agregarLabel(JLabel label){
+        panel.add(label);
     }
 }

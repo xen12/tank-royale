@@ -21,6 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  *
@@ -31,8 +32,9 @@ public class MainController {
     private FramePrincipal frame;
     private ArrayList<Tanque> tanques;
     private ArrayList<TanqueView> tanquesVisual;
+    private ArrayList<JLabel> infoTanques;
     private ArrayList<BalaView> balas;
-    int num = 5;
+    int num = 15;
     
     public void inicializar() throws ClassNotFoundException, IOException{
         frame = new FramePrincipal();
@@ -51,7 +53,7 @@ public class MainController {
                 for(int i=0 ; i<tanques.size() ; i++){
                     
                     if( tanques.get(i).hp > 0 ){
-                        tanquesVisual.get(i).mover(tanques.get(i).getX(), tanques.get(i).getY());
+                        tanquesVisual.get(i).mover(tanques.get(i).getX(), tanques.get(i).getY(), frame);
                         balas.get(i).mover(tanques.get(i).disparo.x, tanques.get(i).disparo.y);
 
                         //System.out.println("Salud de " + tanques.get(i).getLocalName() + ": " + tanques.get(i).hp);
@@ -82,6 +84,7 @@ public class MainController {
                                     if( tanquesVisual.get(i).getX() >= balas.get(j).getX()-25 && tanquesVisual.get(i).getX() <= balas.get(j).getX()+25  && tanquesVisual.get(i).getY() >= balas.get(j).getY()-25 && tanquesVisual.get(i).getY() <= balas.get(j).getY()+25 ){
                                         tanques.get(j).disparar = false;
                                         tanques.get(i).recibirDaño();
+                                        tanquesVisual.get(i).label.setText("<html>" + tanques.get(i).getLocalName() + "<br>" + tanques.get(i).hp + "/100<html>");
                                     }
                             }
                         }
@@ -121,11 +124,12 @@ public class MainController {
                 int img = ((int)Math.floor(Math.random() * (4 - 1 +1) + 1));
                 //balas[i] = frame.agregarNuevaBala(i * 200, i * 200);
                 Tanque tanque = new Tanque(posX, posY);
-                tanquesVisual.add(frame.agregarNuevoTanque(posX, posY, img));
-                balas.add(frame.agregarNuevaBala(posX, posY));
-                
                 ac = container.acceptNewAgent(nombres[i], tanque);
                 ac.start();
+                
+                tanquesVisual.add(frame.agregarNuevoTanque(posX, posY, img, frame, tanque.getLocalName()));
+                balas.add(frame.agregarNuevaBala(posX, posY));
+                
                 tanques.add(tanque);
             }
         } catch (StaleProxyException ex) {
