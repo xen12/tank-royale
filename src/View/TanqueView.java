@@ -66,4 +66,8 @@ public class TanqueView extends JLabel {
         
         setBounds(xPos, yPos, ANCHO, ALTO);
     }
+    
+    public void retirar(int xPos, int yPos){
+        setBounds(xPos, yPos, ANCHO, ALTO);
+    }
 }

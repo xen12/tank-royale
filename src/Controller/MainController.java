@@ -32,7 +32,7 @@ public class MainController {
     private ArrayList<Tanque> tanques;
     private ArrayList<TanqueView> tanquesVisual;
     private ArrayList<BalaView> balas;
-    int num = 3;
+    int num = 5;
     
     public void inicializar() throws ClassNotFoundException, IOException{
         frame = new FramePrincipal();
@@ -47,58 +47,55 @@ public class MainController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                int objetivoX;
-                int objetivoY;
                 
-                for(int i=0 ; i<num ; i++){
-                    tanquesVisual.get(i).mover(tanques.get(i).getX(), tanques.get(i).getY());
-                    balas.get(i).mover(tanques.get(i).disparo.x, tanques.get(i).disparo.y);
+                for(int i=0 ; i<tanques.size() ; i++){
                     
-                    //System.out.println("Salud de " + tanques.get(i).getLocalName() + ": " + tanques.get(i).hp);
-                    
-                    for(int j=0 ; j<num ; j++){
-                        if(i!=j){
-                            
-                            //if(tanques.get(j).disparo.x > tanques.get(i).getX() && tanques.get(j).disparo.x < tanques.get(i).getX() + 50
-                                // && tanques.get(j).disparo.y > tanques.get(i).getY() && tanques.get(j).disparo.y < tanques.get(i).getY() + 50){
-                                
-                                // Sensor en eje X
-                                if( tanquesVisual.get(i).getY() > tanquesVisual.get(j).getY()-25 && tanquesVisual.get(i).getY() < tanquesVisual.get(j).getY()+25 ){
-                                    if(tanquesVisual.get(i).orientacion == "izquierda" && tanquesVisual.get(j).getX() < tanquesVisual.get(i).getX()){
-                                        tanques.get(i).disparar = true;
+                    if( tanques.get(i).hp > 0 ){
+                        tanquesVisual.get(i).mover(tanques.get(i).getX(), tanques.get(i).getY());
+                        balas.get(i).mover(tanques.get(i).disparo.x, tanques.get(i).disparo.y);
+
+                        //System.out.println("Salud de " + tanques.get(i).getLocalName() + ": " + tanques.get(i).hp);
+
+                        for(int j=0 ; j<tanques.size() ; j++){
+                            if(i!=j){
+
+                                    // Sensor en eje X
+                                    if( tanquesVisual.get(i).getY() > tanquesVisual.get(j).getY()-25 && tanquesVisual.get(i).getY() < tanquesVisual.get(j).getY()+25 ){
+                                        if(tanquesVisual.get(i).orientacion == "izquierda" && tanquesVisual.get(j).getX() < tanquesVisual.get(i).getX()){
+                                            tanques.get(i).disparar = true;
+                                        }
+                                        else if (tanquesVisual.get(i).orientacion == "derecha" && tanquesVisual.get(j).getX() > tanquesVisual.get(i).getX()){
+                                            tanques.get(i).disparar = true;
+                                        }
                                     }
-                                    else if (tanquesVisual.get(i).orientacion == "derecha" && tanquesVisual.get(j).getX() > tanquesVisual.get(i).getX()){
-                                        tanques.get(i).disparar = true;
+                                    //Sensor en eje Y
+                                    else if ( tanquesVisual.get(i).getX() > tanquesVisual.get(j).getX()-25 && tanquesVisual.get(i).getX() < tanquesVisual.get(j).getX()+25 ){
+                                        if(tanquesVisual.get(i).orientacion == "arriba" && tanquesVisual.get(j).getY() < tanquesVisual.get(i).getY()){
+                                            tanques.get(i).disparar = true;
+                                        }
+                                        else if (tanquesVisual.get(i).orientacion == "abajo" && tanquesVisual.get(j).getY() > tanquesVisual.get(i).getY()){
+                                            tanques.get(i).disparar = true;
+                                        }
                                     }
-                                }
-                                //Sensor en eje Y
-                                else if ( tanquesVisual.get(i).getX() > tanquesVisual.get(j).getX()-25 && tanquesVisual.get(i).getX() < tanquesVisual.get(j).getX()+25 ){
-                                    if(tanquesVisual.get(i).orientacion == "arriba" && tanquesVisual.get(j).getY() < tanquesVisual.get(i).getY()){
-                                        tanques.get(i).disparar = true;
+
+                                    // Detector de daño
+                                    if( tanquesVisual.get(i).getX() >= balas.get(j).getX()-25 && tanquesVisual.get(i).getX() <= balas.get(j).getX()+25  && tanquesVisual.get(i).getY() >= balas.get(j).getY()-25 && tanquesVisual.get(i).getY() <= balas.get(j).getY()+25 ){
+                                        tanques.get(j).disparar = false;
+                                        tanques.get(i).recibirDaño();
                                     }
-                                    else if (tanquesVisual.get(i).orientacion == "abajo" && tanquesVisual.get(j).getY() > tanquesVisual.get(i).getY()){
-                                        tanques.get(i).disparar = true;
-                                    }
-                                }
-                                /*
-                                if(tanques.get(j).disparo.x == tanques.get(i).getX() && tanques.get(j).disparo.y == tanques.get(i).getY()){
-                                tanques.get(i).recibirDaño();
-                                tanques.get(i).disparar = false;
-                            }*/
-                            
-                            
-                            //double dif = Math.min(Math.abs(tanques[i].getX() - tanques[j].getX()), Math.abs(tanques[i].getY() - tanques[j].getY()));
-                            /*
-                            double val = Math.random();
-                            if(tanques.get(i).getX() ==  tanques.get(j).getX() || tanques.get(i).getY() ==  tanques.get(j).getY()){
-                                tanques.get(i).disparar = true;
-                                //tanques.get(i).detener();
-                                //tanques.get(j).detener();
                             }
-                            */
                         }
+                    } else {
+                        tanques.remove(i);
+                        
+                        tanquesVisual.get(i).retirar(2000, 2000);
+                        frame.eliminarTanque(tanquesVisual.get(i));
+                        tanquesVisual.remove(i);
+                        
+                        balas.get(i).retirar(2000, 2000);
+                        frame.eliminarBala(balas.get(i));
+                        balas.remove(i);
                     }
-                    
                     
                 }
                 
