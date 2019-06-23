@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Behaviour;
 
 import jade.core.behaviours.Behaviour;
 import java.util.Random;
 
 /**
- *
- * @author Bernardo
+ * @author Gustavo
  */
-public class Movimiento extends Behaviour{
 
+// CLASE HEREDADA DE COMPORTAMIENTO DE JADE
+public class Movimiento extends Behaviour{
     private boolean turno;
     private boolean detener;
     private int x;
@@ -22,6 +17,7 @@ public class Movimiento extends Behaviour{
     private int keep;
     public int dirX, dirY;
     
+    // CONSTRUCTOR QUE RECIBE PARÁMETROS DESDE CREACIÓN DEL AGENTE Tanque (en MainController)
     public Movimiento(int x, int y){
         super();
         keep = 0;
@@ -32,9 +28,10 @@ public class Movimiento extends Behaviour{
         contadorTiempo = System.currentTimeMillis();
     }
     
+    // FUNCIÓN REPETITIVA DE Jade Behaviour
     @Override
     public void action() {
-        //System.out.println(myAgent.getLocalName() + " moviéndose");
+        // Movimiento del tanque de manera Aleatoria en cuatro direcciones
         if(System.currentTimeMillis() - contadorTiempo >= 80){
             if(keep <= 0){
                 Random r = new Random(System.currentTimeMillis() / (x * y + 1));
@@ -64,6 +61,7 @@ public class Movimiento extends Behaviour{
         }
     }
 
+    // Otra función de jade con variable boolean para detener el tanque (El action de arriba verifica esta variable para ejecutarse o no)
     @Override
     public boolean done() {
         return detener;

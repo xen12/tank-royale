@@ -7,6 +7,8 @@ import jade.core.Agent;
 /**
  * @author Gustavo
  */
+
+// CLASE HEREDADA DE JADE AGENTE
 public class Tanque extends Agent {
     
     public Movimiento movimiento;
@@ -15,6 +17,7 @@ public class Tanque extends Agent {
     public int hp;
     public String orientación;
     
+    // CONSTRUCTOR QUE RECIBE PARÁMETROS PARÁMETROS DE POSICIÓN PARA EL FRAME (Sincronización con la Clase TanqueViewl)
     public Tanque(int x, int y){
         super();
         movimiento = new Movimiento(x, y);
@@ -23,6 +26,7 @@ public class Tanque extends Agent {
         hp = 100;
     }
     
+    // FUNCIÓN DE JADE SIMILAR A UN CONSTRUCTOR PARA ASIGNAR CLASES DE COMPORTAMIENTO AL AGENTE
     @Override
     protected void setup(){
         addBehaviour(movimiento);

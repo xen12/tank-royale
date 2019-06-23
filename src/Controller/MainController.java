@@ -1,34 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
-
-import Model.Valores;
+// IMPORTACIÓN DE CLASES DE LOS OTROS PAQUETES
 import Model.Tanque;
 import View.BalaView;
 import View.FramePrincipal;
 import View.TanqueView;
+// IMPORTACIÓN DE PAQUETES DE JADE
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
+// IMPORTACIÓN DE FUNCIONALIDADES DE JAVA
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+// LABEL DE JAVASWING
 import javax.swing.JLabel;
 
 /**
- *
  * @author Bernardo
  */
-public class MainController {
-    
+
+// CONTROLADOR PRINCIPAL DEL PROYECTO (Clase que inicializa valores y la puesta en marcha de las funciones de los objetos)
+public class MainController {    
     private FramePrincipal frame;
     private ArrayList<Tanque> tanques;
     private ArrayList<TanqueView> tanquesVisual;
@@ -36,6 +33,7 @@ public class MainController {
     private ArrayList<BalaView> balas;
     int num = 15;
     
+    //Función para inicializar los valores de los atributos que estan arriba
     public void inicializar() throws ClassNotFoundException, IOException{
         frame = new FramePrincipal();
         tanques = new ArrayList<Tanque>();
@@ -46,22 +44,24 @@ public class MainController {
         frame.setVisible(true);
         Timer timer = new Timer();
         
+        // Función de java para ejecutar una función repetidamente como for, pero con un intervalo de tiempo de inactividad entre cada iteración
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 
+                // Recorre todos los tanques de la lista de tanques
                 for(int i=0 ; i<tanques.size() ; i++){
                     
+                    // Verifica la salud del tanque en posición i, y ejecuta el if si es mayor a 0
                     if( tanques.get(i).hp > 0 ){
                         tanquesVisual.get(i).mover(tanques.get(i).getX(), tanques.get(i).getY(), frame);
                         balas.get(i).mover(tanques.get(i).disparo.x, tanques.get(i).disparo.y);
 
-                        //System.out.println("Salud de " + tanques.get(i).getLocalName() + ": " + tanques.get(i).hp);
-
+                        // Recorre otra vez todos los tanques de la lista para comparar la posición del tanque j respecto de i
                         for(int j=0 ; j<tanques.size() ; j++){
                             if(i!=j){
 
-                                    // Sensor en eje X
+                                    // Detectando si hay otro tanque en el eje x para disparar
                                     if( tanquesVisual.get(i).getY() > tanquesVisual.get(j).getY()-25 && tanquesVisual.get(i).getY() < tanquesVisual.get(j).getY()+25 ){
                                         if(tanquesVisual.get(i).orientacion == "izquierda" && tanquesVisual.get(j).getX() < tanquesVisual.get(i).getX()){
                                             tanques.get(i).disparar = true;
@@ -70,7 +70,7 @@ public class MainController {
                                             tanques.get(i).disparar = true;
                                         }
                                     }
-                                    //Sensor en eje Y
+                                    // Detectando si hay otro tanque en el eje y para disparar
                                     else if ( tanquesVisual.get(i).getX() > tanquesVisual.get(j).getX()-25 && tanquesVisual.get(i).getX() < tanquesVisual.get(j).getX()+25 ){
                                         if(tanquesVisual.get(i).orientacion == "arriba" && tanquesVisual.get(j).getY() < tanquesVisual.get(i).getY()){
                                             tanques.get(i).disparar = true;
@@ -80,7 +80,7 @@ public class MainController {
                                         }
                                     }
 
-                                    // Detector de daño
+                                    // Función que indica en interfaz nombre del tanque y su salud
                                     if( tanquesVisual.get(i).getX() >= balas.get(j).getX()-25 && tanquesVisual.get(i).getX() <= balas.get(j).getX()+25  && tanquesVisual.get(i).getY() >= balas.get(j).getY()-25 && tanquesVisual.get(i).getY() <= balas.get(j).getY()+25 ){
                                         tanques.get(j).disparar = false;
                                         tanques.get(i).recibirDaño();
@@ -88,7 +88,7 @@ public class MainController {
                                     }
                             }
                         }
-                    } else {
+                    } else { // Se ejecuta else si la salud del tanque es menor igual a 0 para removerlo de la lista e interfaz
                         tanques.remove(i);
                         
                         tanquesVisual.get(i).retirar(2000, 2000);
@@ -106,6 +106,7 @@ public class MainController {
         }, 3, 3);
     }
     
+    // FUNCIÓN LLAMADA DESDE ARRIBA PARA INICIALIZAR LOS ARREGLOS
     public void inicializarTanques() {
         String[] nombres = new String[num];
         for(int i=0 ; i<num ; i++){
@@ -118,15 +119,19 @@ public class MainController {
         AgentController ac = null;
         
         try {
+            // FOR PARA LLENAR LOS ARREGLOS CON AGENTES TANQUES, TANQUES VISUALES Y BALAS VISUALES
             for(int i=0;i<num;i++){
+                // SE INICIALIZA LA POSICIÓN DEL TANQUE EN EL CAMPO ALEATORIAMENTE EN X, Y
                 int posY = (int)Math.floor(Math.random() * (480 - 1 +1) + 0);
                 int posX = (int)Math.floor(Math.random() * (1080 - 1 +1) + 0);
                 int img = ((int)Math.floor(Math.random() * (4 - 1 +1) + 1));
                 //balas[i] = frame.agregarNuevaBala(i * 200, i * 200);
                 Tanque tanque = new Tanque(posX, posY);
+                // SE AGRAEGA EL AGENTE TANQUE RECIEN CREADO AL CONTENEDOR ac
                 ac = container.acceptNewAgent(nombres[i], tanque);
                 ac.start();
                 
+                // AGREGANDO EL TANQUE VISUAL AL FRAME CREADO ARRIBA
                 tanquesVisual.add(frame.agregarNuevoTanque(posX, posY, img, frame, tanque.getLocalName()));
                 balas.add(frame.agregarNuevaBala(posX, posY));
                 

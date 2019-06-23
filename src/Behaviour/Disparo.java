@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Behaviour;
 
 import Model.Tanque;
@@ -12,6 +7,7 @@ import jade.core.behaviours.CyclicBehaviour;
 /**
  * @author Gustavo
  */
+// CLASE HEREDADA DE COMPORTAMIENTO DE JADE
 public class Disparo extends CyclicBehaviour{
 
     public int x, y;
@@ -21,6 +17,7 @@ public class Disparo extends CyclicBehaviour{
     private Tanque tanque;
     public int VELOCIDAD = 4;
     
+    // CONSTRUCTOR QUE RECIBE PARÁMETROS DESDE LA CREACIÓN DEL AGENTE Tanque (en MainController)
     public Disparo(Tanque tanque){
         super();
         this.tanque = tanque;
@@ -29,11 +26,10 @@ public class Disparo extends CyclicBehaviour{
         contadorTiempo = System.currentTimeMillis();
     }
     
+    // FUNCIÓN DE Behaviour QUE SE EJECUTA PARA SIEMPRE
     @Override
     public void action() {
-        
-        //System.out.println("Disparo de: " + myAgent.getLocalName());
-        
+        // SI TANQUE NO ESTÁ DISPARANDO RETORNA LA POSICIÓN DE LA BALA CON LA DEL TANQUE
         if(!tanque.disparar){
             x = tanque.getX();
             y = tanque.getY();
@@ -41,7 +37,7 @@ public class Disparo extends CyclicBehaviour{
             dirY = tanque.movimiento.dirY;
             contadorTiempo = System.currentTimeMillis();
         }
-        else{
+        else{ // SI ESTÁ DISPARANDO ACTUALIZA LA POSICIÓN DE LA BALA CON RESPECTO A LA DIRECCIÓN EN LA QUE FUÉ LANZADA
             if(System.currentTimeMillis() - contadorTiempo >= VELOCIDAD){
                 contadorTiempo = System.currentTimeMillis();
                 x += dirX;

@@ -18,6 +18,7 @@ import javax.swing.JLabel;
  * @author Gustavo
  */
 
+// CLASE PARA LA PARTE INTERFAZ DE LA BALA, QUE RECIBE LOS MISMOS PARÁMETROS DE POSICIÓN QUE LA CLASE AGENTE TANQUE
 public class BalaView extends JLabel {
     private static final String NOMBRE_IMAGEN = "img/bala.png";
     private static final int ANCHO = 50;
@@ -26,10 +27,12 @@ public class BalaView extends JLabel {
     
     private Image imagen;
     
+    // RECIBIENDO PARÁMETROS DE POSICIÓN DESDE LA CRECIÓN DE LA BALA EN MainController
     public BalaView(int x, int y){
         init(x, y);
     }
     
+    // INICIALIZACIÓN DEL OBJETO EN INTERFAZ
     private void init(int posX, int posY){
         URL dir = getClass().getClassLoader().getResource(NOMBRE_IMAGEN);
         imagen = null;
@@ -50,6 +53,7 @@ public class BalaView extends JLabel {
         int x = xPos == getX() ? 0 : xPos > getX() ? 1 : -1;
         int y = yPos == getY() ? 0 : yPos > getY() ? 1 : -1;
         
+        // ROTACIÓN DE LA BALA SEGÚN LA DIRECCIÓN EN LA QUE FUÉ DISPARADA
         if(x < 0)
             img = new RotatedIcon(new ImageIcon(imagen), RotatedIcon.Rotate.DOWN);
         else if(x > 0)
@@ -64,6 +68,7 @@ public class BalaView extends JLabel {
         setBounds((xPos), (yPos), ANCHO, ALTO);
     }
     
+    // FUNCIÓN PARA ELIMINAR BALA VISUAL DEL FRAME
     public void retirar(int xPos, int yPos){
         setBounds(xPos, yPos, ANCHO, ALTO);
     }

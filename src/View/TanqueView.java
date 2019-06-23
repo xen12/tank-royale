@@ -17,9 +17,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- *
  * @author Bernardo
  */
+
+// CLASE PARA LA PARTE INTERFAZ DEL TANQUE, QUE RECIBE LOS MISMOS PARÁMETROS DE POSICIÓN QUE LA CLASE AGENTE TANQUE
 public class TanqueView extends JLabel {
     
     private static String NOMBRE_IMAGEN; 
@@ -33,6 +34,7 @@ public class TanqueView extends JLabel {
     private FramePrincipal frame;
     public JLabel label;
     
+    // RECIBIENDO PARÁMETROS DE POSICIÓN DESDE LA CRECIÓN DEL TANQUE EN MainController, MÁS LA IMAGEN GENERADA PARA EL TANQUE
     public TanqueView(int x, int y, int img, FramePrincipal frame, String name){
         NOMBRE_IMAGEN = "img/tank"+ img + ".png";
         this.frame = frame;
@@ -43,6 +45,7 @@ public class TanqueView extends JLabel {
         init(x, y);
     }
     
+    // INICIALIZACIÓN DEL OBJETO EN INTERFAZ
     private void init(int posX, int posY){
         URL dir = getClass().getClassLoader().getResource(NOMBRE_IMAGEN);
         imagen = null;
@@ -60,12 +63,14 @@ public class TanqueView extends JLabel {
         frame.agregarLabel(label);
     }
     
+    // FUNCIÓN PARA MOVER LA PARTE VISUAL DEL TANQUE EN EL FRAME, RECIBIENDO LA POSICIÓN ACTUAL
     public void mover(int xPos, int yPos, FramePrincipal frame){
         RotatedIcon img = null;
         
         int x = xPos == getX() ? 0 : xPos>getX() ? 1 : -1;
         int y = yPos == getY() ? 0 : yPos>getY() ? 1 : -1;
         
+        // ROTACIÓN DEL TANQUE CUANDO LLEGA A LOS BORDES
         if(x < 0){
             img = new RotatedIcon(new ImageIcon(imagen), RotatedIcon.Rotate.DOWN); orientacion = "izquierda";}
         else if(x > 0){
@@ -81,6 +86,7 @@ public class TanqueView extends JLabel {
         label.setBounds(xPos-14, yPos+6, 80, 120);
     }
     
+    // FUNCIÓN PARA ELIMINAR TANQUE VISUAL DEL PANEL
     public void retirar(int xPos, int yPos){
         setBounds(xPos, yPos, ANCHO, ALTO);
         label.setBounds(xPos, yPos, ANCHO, ALTO);

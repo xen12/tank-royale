@@ -17,6 +17,8 @@ import javax.swing.JPanel;
  *
  * @author Bernardo
  */
+
+// CLASE QUE SE USA PARA PONER IMAGEN DE FONDO AL FRAME (SIN IMPORTANCIA)
 public class PanelView extends JPanel implements KeyListener{   
     
     //TanqueView tanque;

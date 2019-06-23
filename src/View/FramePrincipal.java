@@ -15,9 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 /**
- *
- * @author Bernardo
+ * @author Gustavo
  */
+
+// CLASE DEL PANEL PRINCIPAL DE LA APLICACIÓN (Ventana)
 public class FramePrincipal extends JFrame{
     
     private PanelView panel;
@@ -30,6 +31,7 @@ public class FramePrincipal extends JFrame{
         init();
     }
     
+    // INICIALIZACIÓN DE VALORES
     private void init(){
         
         panel = new PanelView();
@@ -46,22 +48,26 @@ public class FramePrincipal extends JFrame{
         setBounds(100, 100, ANCHO, ALTO);
     }
     
+    // AÑADIR TanqueView AL PANEL
     public TanqueView agregarNuevoTanque(int x, int y, int img, FramePrincipal frame, String name){
         TanqueView tanque = new TanqueView(x, y, img, frame, name);
         panel.add(tanque);
         return tanque;
     }
     
+    // ELIMINAR TanqueView DEL PANEL
     public void eliminarTanque(TanqueView tanque){
         panel.remove(tanque);
     }
     
+    // AÑADIR BalaView AL PANEL
     public BalaView agregarNuevaBala(int x, int y){
         BalaView bala = new BalaView(x, y);
         panel.add(bala);
         return bala;
     }
     
+    // ELIMINAR BalaView DEL PANEL
     public void eliminarBala(BalaView bala){
         panel.remove(bala);
     }
