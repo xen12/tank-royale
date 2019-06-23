@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.Tanque;
 import Extra.RotatedIcon;
 import java.awt.Color;
 import java.awt.Font;
@@ -86,7 +87,26 @@ public class TanqueView extends JLabel {
         label.setBounds(xPos-14, yPos+6, 80, 120);
     }
     
-    // FUNCIÓN PARA ELIMINAR TANQUE VISUAL DEL PANEL
+    public void verificarTanqueXY(Tanque tank, TanqueView otherTankView){
+        if( getY() > otherTankView.getY()-25 && getY() < otherTankView.getY()+25 ){
+            if(orientacion == "izquierda" && otherTankView.getX() < getX()){
+                tank.disparar = true;
+            }
+            else if (orientacion == "derecha" && otherTankView.getX() > getX()){
+                tank.disparar = true;
+            }
+        } // Detectando si hay otro tanque en el eje y para disparar
+        else if ( getX() > otherTankView.getX()-25 && getX() < otherTankView.getX()+25 ){
+            if(orientacion == "arriba" && otherTankView.getY() < getY()){
+                tank.disparar = true;
+            }
+            else if (orientacion == "abajo" && otherTankView.getY() > getY()){
+                tank.disparar = true;
+            }
+        }
+    }
+    
+    // FUNCIÓN PARA ELIMINAR TANQUE VISUAL DEL FRAME
     public void retirar(int xPos, int yPos){
         setBounds(xPos, yPos, ANCHO, ALTO);
         label.setBounds(xPos, yPos, ANCHO, ALTO);

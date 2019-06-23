@@ -60,7 +60,7 @@ public class MainController {
                         // Recorre otra vez todos los tanques de la lista para comparar la posición del tanque j respecto de i
                         for(int j=0 ; j<tanques.size() ; j++){
                             if(i!=j){
-
+                                    /*
                                     // Detectando si hay otro tanque en el eje x para disparar
                                     if( tanquesVisual.get(i).getY() > tanquesVisual.get(j).getY()-25 && tanquesVisual.get(i).getY() < tanquesVisual.get(j).getY()+25 ){
                                         if(tanquesVisual.get(i).orientacion == "izquierda" && tanquesVisual.get(j).getX() < tanquesVisual.get(i).getX()){
@@ -69,8 +69,7 @@ public class MainController {
                                         else if (tanquesVisual.get(i).orientacion == "derecha" && tanquesVisual.get(j).getX() > tanquesVisual.get(i).getX()){
                                             tanques.get(i).disparar = true;
                                         }
-                                    }
-                                    // Detectando si hay otro tanque en el eje y para disparar
+                                    } // Detectando si hay otro tanque en el eje y para disparar
                                     else if ( tanquesVisual.get(i).getX() > tanquesVisual.get(j).getX()-25 && tanquesVisual.get(i).getX() < tanquesVisual.get(j).getX()+25 ){
                                         if(tanquesVisual.get(i).orientacion == "arriba" && tanquesVisual.get(j).getY() < tanquesVisual.get(i).getY()){
                                             tanques.get(i).disparar = true;
@@ -79,6 +78,10 @@ public class MainController {
                                             tanques.get(i).disparar = true;
                                         }
                                     }
+                                   */
+                                    
+                                    // FUNCIÓN REFACTORIZADA EN LA CLASE Tanque
+                                    tanquesVisual.get(i).verificarTanqueXY(tanques.get(i), tanquesVisual.get(j));
 
                                     // Función que indica en interfaz nombre del tanque y su salud
                                     if( tanquesVisual.get(i).getX() >= balas.get(j).getX()-25 && tanquesVisual.get(i).getX() <= balas.get(j).getX()+25  && tanquesVisual.get(i).getY() >= balas.get(j).getY()-25 && tanquesVisual.get(i).getY() <= balas.get(j).getY()+25 ){
