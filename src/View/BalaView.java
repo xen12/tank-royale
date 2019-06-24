@@ -23,7 +23,7 @@ public class BalaView extends JLabel {
     private static final String NOMBRE_IMAGEN = "img/bala.png";
     private static final int ANCHO = 50;
     private static final int ALTO = 50;
-    private static final int POTENCIA =1;
+    public int POTENCIA =1;
     
     private Image imagen;
     

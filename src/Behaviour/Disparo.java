@@ -15,7 +15,8 @@ public class Disparo extends CyclicBehaviour{
     private int dirY;
     private long contadorTiempo;
     private Tanque tanque;
-    public int VELOCIDAD = 4;
+    public int VELOCIDAD = 6;
+    public int TIEMPO_DE_VIDA = 0;
     
     // CONSTRUCTOR QUE RECIBE PARÁMETROS DESDE LA CREACIÓN DEL AGENTE Tanque (en MainController)
     public Disparo(Tanque tanque){
@@ -42,14 +43,17 @@ public class Disparo extends CyclicBehaviour{
                 contadorTiempo = System.currentTimeMillis();
                 x += dirX;
                 y += dirY;
+                
+                TIEMPO_DE_VIDA--;
+                if(TIEMPO_DE_VIDA <1){
+                    tanque.disparar = false;
+                }
                 if(dirX == 0 && dirY == 0)
                     tanque.disparar = false;
                 if(x < 0 || x > 1150 || y < 0 || y > 550)
                     tanque.disparar = false;
             }
         }
-        
-        
     }
     
     public int getX(){

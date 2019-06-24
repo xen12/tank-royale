@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 /**
- * @author Bernardo
+ * @author Gustavo
  */
 
 // CONTROLADOR PRINCIPAL DEL PROYECTO (Clase que inicializa valores y la puesta en marcha de las funciones de los objetos)
@@ -31,7 +31,7 @@ public class MainController {
     private ArrayList<TanqueView> tanquesVisual;
     private ArrayList<JLabel> infoTanques;
     private ArrayList<BalaView> balas;
-    int num = 15;
+    int num = 5;
     
     //Función para inicializar los valores de los atributos que estan arriba
     public void inicializar() throws ClassNotFoundException, IOException{
@@ -80,8 +80,8 @@ public class MainController {
                                     }
                                    */
                                     
-                                    // FUNCIÓN REFACTORIZADA EN LA CLASE Tanque
-                                    tanquesVisual.get(i).verificarTanqueXY(tanques.get(i), tanquesVisual.get(j));
+                                    // FUNCIÓN DE ARRIBA REFACTORIZADA EN LA CLASE Tanque
+                                    tanquesVisual.get(i).verificarTanqueXY(tanques.get(i), balas.get(i), tanquesVisual.get(j));
 
                                     // Función que indica en interfaz nombre del tanque y su salud
                                     if( tanquesVisual.get(i).getX() >= balas.get(j).getX()-25 && tanquesVisual.get(i).getX() <= balas.get(j).getX()+25  && tanquesVisual.get(i).getY() >= balas.get(j).getY()-25 && tanquesVisual.get(i).getY() <= balas.get(j).getY()+25 ){
