@@ -31,7 +31,7 @@ public class MainController {
     private ArrayList<TanqueView> tanquesVisual;
     private ArrayList<JLabel> infoTanques;
     private ArrayList<BalaView> balas;
-    int num = 5;
+    int num = 15;
     
     //Función para inicializar los valores de los atributos que estan arriba
     public void inicializar() throws ClassNotFoundException, IOException{
